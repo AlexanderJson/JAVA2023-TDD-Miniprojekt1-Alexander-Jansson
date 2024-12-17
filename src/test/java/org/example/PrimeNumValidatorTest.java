@@ -23,17 +23,6 @@ class PrimeNumValidatorTest {
      * These tests are for the calculatePrime() method.
      * They focus on testing different valid and invalid inputs
      */
-
-  @DisplayName("This method tests if calculatePrime can correctly throw error when an invalid range (n) is set")
-  @Test
-  void calculatePrimeTestInvalidRange(){
-        int n = 1001;
-              assertThrows(IllegalArgumentException.class, () -> {
-                  validator.calculatePrime(n);
-        }, "This should throw error if the start is less than 1 or end is more than 1000");
-  }
-
-
     @DisplayName("This method checks if isPrime() correctly identifies a prime number as a prime number")
     @Test
     void isPrimeTestActualPrimeNumber() {
@@ -50,7 +39,7 @@ class PrimeNumValidatorTest {
         assertFalse(actual);
     }
 
-    @DisplayName("This method checks if isPrime() correctly identifies a composite number as a composite number")
+    @DisplayName("This method checks if isPrime() correctly throws error ")
     @Test
     void isPrimeTestIfInvalidRange() {
         int n = 1001;
@@ -59,12 +48,32 @@ class PrimeNumValidatorTest {
         }, "This should throw error if the start is less than 1 or end is more than 1000");
     }
 
+    @DisplayName("This method tests if calculatePrime can correctly throw error when an invalid range (n) is set")
+    @Test
+    void calculatePrimeNegativeRange(){
+        int n = -1;
+        assertThrows(IllegalArgumentException.class, () -> {
+            validator.calculatePrime(n);
+        }, "This should throw error if the start is less than 1 or end is more than 1000");
+    }
+
+
     /**
      * These tests are for the countPrimes() method.
      */
-    @DisplayName("This method tests if calculatePrime can correctly identify a prime num")
+
+    @DisplayName("This method tests if countPrimes can handle 1 ")
     @Test
-    void calculatePrimeTestPrimeNumberRangeToTen() {
+    void countPrimeTestRangeOne(){
+        int n = 1;
+        int expected = 0;
+        assertEquals(expected, validator.countPrimes(n), "There should be 0 prime nums at range 1");
+    }
+
+
+    @DisplayName("This method tests if calculatePrime can correctly identify a prime num from 2-10")
+    @Test
+    void countPrimeTestPrimeNumberRangeToTen() {
         int n = 10;
         int expected = 4;
         int primeNums = validator.countPrimes(n);
@@ -73,22 +82,26 @@ class PrimeNumValidatorTest {
 
     @DisplayName("This method tests if calculatePrime can correctly identify a prime num (full range)")
     @Test
-    void calculatePrimeTestPrimeNumberFullRange() {
+    void countPrimeTestPrimeNumberFullRange() {
         int n = 1000;
         int expected = 168;
         int primeNums = validator.countPrimes(n);
-        assertEquals(expected, primeNums,"there should be 4 prime nums between 1-10");
+        assertEquals(expected, primeNums,"there should be 168 prime nums between 1-1000");
     }
 
-    @DisplayName("This method checks if isPrime() correctly identifies a composite number as a composite number")
+    @DisplayName("This method checks if countPrime() throws error when range is out of bounds")
     @Test
     void countPrimeTestIfInvalidRange() {
         int n = 1001;
         assertThrows(IllegalArgumentException.class, () -> {
-            validator.calculatePrime(n);
+            validator.countPrimes(n);
         }, "This should throw error if the start is less than 1 or end is more than 1000");
     }
 
+
+    /**
+     * These tests check if the sumPrimes can correcly add prime numbers in different ranges
+     */
     @DisplayName("This method checks if sumPrimes correctly add all values from a range of 2-10")
     @Test
     void sumPrimesRangeToTen() {
@@ -117,15 +130,26 @@ class PrimeNumValidatorTest {
     }
 
 
-    @DisplayName("This method checks if isPrime() correctly identifies a composite number as a composite number")
+    /**
+     * These tests are to check error handling for printCount and printSum
+     */
+    @DisplayName("This method checks if printCountPrime() throws error when range is out of bounds")
     @Test
-    void sumPrimesTestIfInvalidRange() {
+    void printCountPrimeTestIfInvalidRange() {
         int n = 1001;
         assertThrows(IllegalArgumentException.class, () -> {
-            validator.sumPrimes(n);
+            validator.printCountPrimes(n);
         }, "This should throw error if the start is less than 1 or end is more than 1000");
     }
 
+    @DisplayName("This method checks if printSumPrime() throws error when range is out of bounds")
+    @Test
+    void printSumPrimeTestIfInvalidRange() {
+        int n = 1001;
+        assertThrows(IllegalArgumentException.class, () -> {
+            validator.printSumPrimes(n);
+        }, "This should throw error if the start is less than 1 or end is more than 1000");
+    }
 }
 
 
