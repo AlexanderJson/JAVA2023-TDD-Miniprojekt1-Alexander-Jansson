@@ -13,9 +13,9 @@ public class PrimeNumValidator {
 
 
     /**
-     * This method uses Sieve of Eratosthenes to
-     * create a bitset of prime numbers, by removing composite numbers.
+     * This algorithm will create a bitset of prime numbers, by removing composite numbers.
      * It will generate a list of prime numbers from 2 -> n and then reuse the values
+     * (Sieve of Eratosthenes algoirithm)
      */
     public List<Integer> calculatePrime(int n) {
         //Guard clause that checks first so that the input is within range. Else it throws error and interrupts the method completely.
@@ -24,17 +24,15 @@ public class PrimeNumValidator {
         primeNumbers = new BitSet(n + 1);
         // All values are initially set to true
         primeNumbers.set(2, n + 1);
-        /* in outer loop I square [i] first, because all numbers
-        squared are composite numbers(except 1 obviously), this removes all squared composite until N
-         then for each iteration in outer loop, we also take the
-         j = (i*i). This squared numbed of each number, then we just add
-         i until end of range. This removes all composite numbers.
-         Basically if i = 2 then - > 2*2 = 4, 4+2,6+2,8+2 -> 100.
-         But we also set all composite as false and with if statements check
-         every iteration. So it will very quickly be able to iterate no matter range!
+
+        /*
+          from 2, I take the square of each iteration (to eliminate all smaller multiples)
          */
         for (int i = 2; i * i <= n; i++) {
+            // since each iteration will set composite values as false, we recheck here
             if (primeNumbers.get(i))
+                // then this  inner loop now takes the multiple of i and adds i to find
+                // the next multiple (ex. i = 2, 2*2 = 4 + 2 = 6, 6+2=8 etc), then clears all the multiples.
                 for (int j = i * i; j <= n; j += i) {
                     primeNumbers.clear(j);
                 }
