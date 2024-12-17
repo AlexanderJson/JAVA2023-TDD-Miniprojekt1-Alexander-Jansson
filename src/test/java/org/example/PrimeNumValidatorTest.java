@@ -18,6 +18,9 @@ class PrimeNumValidatorTest {
         validator = new PrimeNumValidator();
     }
 
+
+    // Tests for checkPrime()
+
     @DisplayName("This method checks if the method " +
             "correctly calculates a prime number")
     @Test
@@ -36,6 +39,8 @@ class PrimeNumValidatorTest {
     }
 
 
+    // Tests for findPrimeNumbers()
+
     @DisplayName("This method checks if the method can correctly find prime numbers between 1-10" )
     @Test
     void findPrimeNumbersTestRangeOneToTen(){
@@ -43,7 +48,7 @@ class PrimeNumValidatorTest {
         int end = 10;
         int expected = 4;
         int actual = validator.findPrimeNumbers(start,end);
-        assertEquals(expected,actual,"It should be 4 numbers between 1-10");
+        assertEquals(expected,actual,"It should be 4 numbers between 1-10. The returned sum from method is: " + actual);
     }
 
     @DisplayName("This method checks if the method can correctly find prime numbers between 1-10" )
@@ -53,17 +58,19 @@ class PrimeNumValidatorTest {
         int end = 1000;
         int expected = 168;
         int actual = validator.findPrimeNumbers(start,end);
-        assertEquals(expected,actual,"It should be 168 numbers between 1-1000");
+        assertEquals(expected,actual,"It should be 168 numbers between 1-1000. The returned sum from method is: " + actual);
     }
 
-//    @DisplayName("This method checks if the method can correctly throw exception if numbers are out of range (1-1000)" )
-//    @Test
-//    void findPrimeNumbersTestOutOfRange(){
-//        int start = 1;
-//        int end = 1001;
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            validator.findPrimeNumbers(start,end);
-//        }, "Input is out of range! Only numbers between 1-1000!!!");
-//    }
+    @DisplayName("This method checks if the method can correctly throw exception if numbers are out of range (1-1000)" )
+    @Test
+    void findPrimeNumbersTestOutOfRange(){
+        int start = -1;
+        int end = 1001;
+        assertThrows(IllegalArgumentException.class, () -> {
+            validator.findPrimeNumbers(start,end);
+        }, "This should throw error if the start is less than 1 or end is more than 1000");
+    }
+
+
 
 }

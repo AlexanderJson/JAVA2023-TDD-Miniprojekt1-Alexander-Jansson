@@ -24,19 +24,22 @@ public class PrimeNumValidator {
         return true;
     }
 
-    public int findPrimeNumbers(int start, int end){
+    public int findPrimeNumbers(int start, int end) {
 
-        int primeNumbers = 0;
-
-
-        for (int i = start; i <= end; i++) {
-            if (checkPrime(i)){
-                primeNumbers++;
-            }
+        //Guard clause that checks first so that the input is within range. Else it throws error and interrupts the method completely.
+        if (start < 1 || end > 1000) {
+            throw new IllegalArgumentException("Input must be between 1-1000." +
+                    " Your input was: " + start + " to " + end);
         }
-        System.out.println("There is a total of: " + primeNumbers + " between "
-        + start + " and " + end);
-        return primeNumbers;
+            int primeNumbers = 0;
+            for (int i = start; i <= end; i++) {
+                if (checkPrime(i)) {
+                    primeNumbers++;
+                }
+            }
+            System.out.println("There is a total of: " + primeNumbers + " between "
+                    + start + " and " + end);
+            return primeNumbers;
+        }
     }
 
-}
