@@ -19,6 +19,7 @@ class PrimeNumValidatorTest {
         validator = new PrimeNumValidator();
     }
 
+
     /**
      * These tests are for the calculatePrime() method.
      * They focus on testing different valid and invalid inputs

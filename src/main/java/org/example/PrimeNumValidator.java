@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class PrimeNumValidator {
 
@@ -15,7 +16,6 @@ public class PrimeNumValidator {
     /**
      * This algorithm will create a bitset of prime numbers, by removing composite numbers.
      * It will generate a list of prime numbers from 2 -> n and then reuse the values
-     * (Sieve of Eratosthenes algoirithm)
      */
     public List<Integer> calculatePrime(int n) {
         //Guard clause that checks first so that the input is within range. Else it throws error and interrupts the method completely.
@@ -24,6 +24,7 @@ public class PrimeNumValidator {
         primeNumbers = new BitSet(n + 1);
         // All values are initially set to true
         primeNumbers.set(2, n + 1);
+
 
         /*
           from 2, I take the square of each iteration (to eliminate all smaller multiples)
@@ -50,9 +51,19 @@ public class PrimeNumValidator {
         } return primes;
     }
 
+
+    // lazy init of prime list
+    private void initPrimeList(){
+        if (primes == null || primeNumbers == null){
+//            System.out.println("Init activating!");
+            primes = calculatePrime(1000);
+         }
+//        System.out.println("Init already done");
+    }
+
     public Boolean isPrime(int n) {
         invalidInput(n);
-        initPrimeList(1000);
+        initPrimeList();
         boolean response =  primeNumbers.get(n);
         if (response){
             System.out.println("The number " + n + " is a prime number!");
@@ -65,39 +76,31 @@ public class PrimeNumValidator {
 
     public int countPrimes(int n) {
         invalidInput(n);
-        initPrimeList(n);
-        return primeNumbers.cardinality();
+        initPrimeList();
+        return (int) primes.stream().filter(p -> p <= n).count();
     }
 
     public int sumPrimes(int n){
         invalidInput(n);
-        initPrimeList(n);
-        return primeNumbers.stream().sum();
+        initPrimeList();
+        return primeNumbers.stream().filter(p -> p <= n).sum();
     }
 
     public void printSumPrimes(int n){
         int sum = sumPrimes(n);
-        System.out.println("The sum of all prime numbers to " + n + " is: " + sum);
+        System.out.println( "Och den totala summan av dessa primtal är " + sum);
     }
 
     public void printCountPrimes(int n){
         int sum = countPrimes(n);
-        System.out.println("The count of all prime numbers to " + n + " is: " + sum);
+        System.out.println("Hej, det finns " + sum + " primtal mellan 0 och 1000");
     }
 
-    // helper classes
 
-    // lazy init of prime list
-    private void initPrimeList(int n){
-        if (primes == null || primeNumbers == null){
-            primes = calculatePrime(n);
-        }
-    }
 
     private void invalidInput(int n){
         if (n < 1 || n > 1000) {
-            throw new IllegalArgumentException("Input must be between 1-1000." +
-                    " Your input was: " + n);
+            throw new IllegalArgumentException("Hoppsan, fel intervall angivet!");
         }
     }
 }
